@@ -1,2 +1,15 @@
 ---
-# tasks file for ansible-manageiq
+- name: enable epel repository
+  yum:
+    name: epel-release
+    state: present
+
+- name: install pip
+  yum:
+    name: python-pip
+    state: present
+
+- name: install dumb-init
+  pip:
+    name: bdumb-init
+    version: "{{ manageiq_dumb_init_version }}"

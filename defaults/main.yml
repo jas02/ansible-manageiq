@@ -1,2 +1,2 @@
 ---
-# defaults file for ansible-manageiq
+manageiq_dumb_init_version: 1.2.1
