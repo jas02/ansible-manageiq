@@ -10,5 +10,5 @@
   #     environment:
   #       - "DEBUG=1"
 manageiq:
-  from: 'manageiq/manageiq-pods:frontend-latest-gaprindashvili'
-  command: ['/usr/bin/dumb-init', 'bash']
+  from: centos:7
+  command: ['/usr/sbin/init']
