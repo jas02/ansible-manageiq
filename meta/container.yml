@@ -9,3 +9,6 @@
   #   dev_overrides:
   #     environment:
   #       - "DEBUG=1"
+manageiq:
+  from: 'manageiq/manageiq-pods:frontend-latest-gaprindashvili'
+  command: ['/usr/bin/dumb-init', 'bash']
