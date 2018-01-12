@@ -11,5 +11,5 @@
 
 - name: install dumb-init
   pip:
-    name: bdumb-init
+    name: dumb-init
     version: "{{ manageiq_dumb_init_version }}"
