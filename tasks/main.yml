@@ -143,7 +143,6 @@
   copy:
     content: ""
     dest: /root/.gemrc
-    state: file
     owner: root
     group: root
     mode: 0644
