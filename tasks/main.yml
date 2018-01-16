@@ -212,14 +212,6 @@
     - "{{ manageiq_appliance_root }}"
     - "{{ manageiq_sui_root }}"
 
-- name: create manageiq symlink
-  file:
-    src: "{{ manageiq_app_root }}/vmdb"
-    dest: /opt/manageiq/manageiq
-    owner: root
-    group: root
-    state: link
-
 - name: download manageiq release
   get_url:
     url: "https://github.com/ManageIQ/manageiq/tarball/{{ manageiq_release_name }}"
@@ -230,6 +222,14 @@
     src: "/usr/src/manageiq-{{ manageiq_release_name }}"
     dest: "{{ manageiq_app_root }}/vmdb"
     remote_src: yes
+
+- name: create manageiq symlink
+  file:
+    src: "{{ manageiq_app_root }}/vmdb"
+    dest: /opt/manageiq/manageiq
+    owner: root
+    group: root
+    state: link
 
 - name: download manageiq-appliance release
   get_url:
