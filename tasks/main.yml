@@ -84,12 +84,27 @@
     - "/lib/systemd/system/basic.target.wants"
     - "/lib/systemd/system/anaconda.target.wants"
 
-- name: delete systemd files using wildcards
+- name: find /etc/systemd/system files to be deleted
+  find:
+    paths:
+      - "/etc/systemd/system"
+    patterns: "/*.wants/*"
+  register: find_results_etc_systemd
+
+- name: find lib/systemd/system files to be deleted
+  find:
+    paths:
+      - "/lib/systemd/system/sockets.target.wants"
+    patterns:
+      - "/*udev*"
+      - "/*initctl*"
+  register: find_results_lib_systemd
+
+- name: delete systemd files using patterns
   file:
-    path: "{{ item }}"
+    path: "{{ item['path'] }}"
     state: absent
-    with_fileglob:
-      - "/etc/systemd/system/*.wants/*"
-      - "/lib/systemd/system/sockets.target.wants/*udev*"
-      - "/lib/systemd/system/sockets.target.wants/*initctl*"
+  with_items:
+    - "{{ find_results_etc_systemd['files'] }}"
+    - "{{ find_results_lib_systemd['files'] }}"
 
