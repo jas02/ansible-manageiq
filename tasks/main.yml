@@ -227,7 +227,7 @@
 
 - name: untar manageiq
   unarchive:
-    src: "/usr/src/manageiq-{{ manageiq }}"
+    src: "/usr/src/manageiq-{{ manageiq_release_name }}"
     dest: "{{ manageiq_app_root }}"
     remote_src: yes
 
