@@ -108,3 +108,60 @@
     - "{{ find_results_etc_systemd['files'] }}"
     - "{{ find_results_lib_systemd['files'] }}"
 
+- name: download chruby
+  get_url:
+    url: "{{ manageiq_chruby_url }}"
+    dest: "/usr/src/{{ manageiq_chruby_tgz_file }}"
+
+- name: untar chruby file
+  unarchive:
+    src: "/usr/src/{{ manageiq_chruby_tgz_file }}"
+    dest: "/usr/src/chruby-{{ manageiq_chruby_version }}"
+    remote_src: yes
+
+- name: run chruby make install
+  command: make install
+  args:
+    chdir: "/usr/src/chruby-{{ manageiq_chruby_version }}"
+
+- name: run chruby setup.sh
+  command: scripts/setup.sh
+  args:
+    chdir: "/usr/src/chruby-{{ manageiq_chruby_version }}"
+
+- name: ensure the line in .gemrc
+  lineinfile:
+    path: /root/.gemrc
+    state: present
+    line: "gem: --no-ri --no-rdoc --no-document"
+
+- name: ensure the line in .bashrc
+  lineinfile:
+    path: /root/.bashrc
+    state: present
+    line: "source /usr/local/share/chruby/chruby.sh"
+
+- name: download ruby-install
+  get_url:
+    url: "{{ manageiq_rubyinstall_url }}"
+    dest: "/usr/src/{{ manageiq_rubyinstall_tgz_file }}"
+
+- name: untar ruby-install file
+  unarchive:
+    src: "/usr/src/{{ manageiq_rubyinstall_tgz_file }}"
+    dest: "/usr/src/ruby-install-{{ manageiq_rubyinstall_version }}"
+    remote_src: yes
+
+- name: run ruby-install make install
+  command: make install
+  args:
+    chdir: "/usr/src/ruby-install-{{ manageiq_rubyinstall_version }}"
+
+- name: run ruby-install
+  command: "ruby-install ruby {{ manageiq_ruby_version }} -- --disable-install-doc"
+
+- name: ensure the line in .bash_profile
+  lineinfile:
+    path: /root/.bash_profile
+    state: present
+    line: "chruby ruby-{{ manageiq_ruby_version }}"

@@ -2,3 +2,16 @@
 manageiq_dumb_init_version: 1.2.1
 manageiq_postgresql_repo_url: https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
 manageiq_postgresql_version: 96
+
+# chruby
+manageiq_chruby_version: 0.3.9
+manageiq_chruby_tgz_file: "v{{ manageiq_chruby_version }}.tar.gz"
+manageiq_chruby_url: "https://github.com/postmodern/chruby/archive/{{ manageiq_chruby_tgz_file }}"
+
+# ruby-install
+manageiq_rubyinstall_version: 0.6.0
+manageiq_rubyinstall_tgz_file: "v{{ manageiq_rubyinstall_version }}.tar.gz"
+manageiq_rubyinstall_url: "https://github.com/postmodern/ruby-install/archive/{{ manageiq_rubyinstall_tgz_file }}"
+
+# ruby
+manageiq_ruby_version: 2.3.1
