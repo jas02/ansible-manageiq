@@ -11,5 +11,6 @@
   #       - "DEBUG=1"
 manageiq:
   from: centos:7
-  entrypoint: ['/usr/bin/dumb-init']
-  command: ['/bin/bash']
+  volumes:
+    - "/var/opt/rh/rh-postgresql95/lib/pgsql/data"
+  command: ['/usr/sbin/init']

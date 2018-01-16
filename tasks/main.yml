@@ -13,3 +13,80 @@
   pip:
     name: dumb-init
     version: "{{ manageiq_dumb_init_version }}"
+
+- name: download manageiq repo file
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/manageiq/ManageIQ-Fine/repo/epel-7/manageiq-ManageIQ-Fine-epel-7.repo
+    dest: /etc/yum.repos.d/manageiq-ManageIQ-Fine-epel-7.repo
+
+
+- name: install required packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "centos-release-scl-rh"
+    - "bison"
+    - "bzip2"
+    - "cmake"
+    - "file"
+    - "gcc-c++"
+    - "git"
+    - "libcurl-devel"
+    - "libffi-devel"
+    - "libtool"
+    - "libxml2-devel"
+    - "libxslt-devel"
+    - "libyaml-devel"
+    - "make"
+    - "memcached"
+    - "net-tools"
+    - "nodejs"
+    - "openssl-devel"
+    - "openscap-scanner"
+    - "patch"
+    - "rh-postgresql95-postgresql-server"
+    - "rh-postgresql95-postgresql-devel"
+    - "rh-postgresql95-postgresql-pglogical"
+    - "rh-postgresql95-repmgr"
+    - "readline-devel"
+    - "sqlite-devel"
+    - "sysvinit-tools"
+    - "which"
+    - "httpd"
+    - "mod_ssl"
+    - "mod_auth_kerb"
+    - "mod_authnz_pam"
+    - "mod_intercept_form_submit"
+    - "mod_lookup_identity"
+    - "initscripts"
+    - "npm"
+    - "chrony"
+    - "psmisc"
+    - "lvm2"
+    - "openldap-clients"
+    - "gdbm-devel"
+    - "cronie"
+    - "logrotate"
+    - "http-parser"
+
+- name: delete all files unnecessary systemd files
+  file:
+    path: "{{ item }}/"
+    state: absent
+  with_items:
+    - "/lib/systemd/system/sysinit.target.wants"
+    - "/lib/systemd/system/multi-user.target.wants"
+    - "/lib/systemd/system/local-fs.target.wants"
+    - "/lib/systemd/system/basic.target.wants"
+    - "/lib/systemd/system/anaconda.target.wants"
+
+- name: delete systemd files using wildcards
+  file:
+    path: "{{ item }}"
+    state: absent
+    with_fileglob:
+      - "/etc/systemd/system/*.wants/*"
+      - "/lib/systemd/system/sockets.target.wants/*udev*"
+      - "/lib/systemd/system/sockets.target.wants/*initctl*"
+
