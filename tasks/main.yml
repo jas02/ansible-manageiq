@@ -191,3 +191,56 @@
     path: /root/.bash_profile
     state: present
     line: "chruby ruby-{{ manageiq_ruby_version }}"
+
+- name: create necessary manageiq directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ manageiq_app_root }}"
+    - "{{ manageiq_appliance_root }}"
+    - "{{ manageiq_sui_root }}"
+
+- name: create manageiq symlink
+  file:
+    src: "{{ manageiq_app_root }}"
+    dest: /opt/manageiq/manageiq
+    owner: root
+    group: root
+    state: link
+
+- name: download manageiq release
+  get_url:
+    url: "https://github.com/ManageIQ/manageiq/tarball/{{ manageiq_release_name }}"
+    dest: "/usr/src/manageiq-{{ manageiq_release_name }}"
+
+- name: untar manageiq
+  unarchive:
+    src: "/usr/src/manageiq-{{ manageiq }}"
+    dest: "{{ manageiq_app_root }}"
+    remote_src: yes
+
+- name: download manageiq-appliance release
+  get_url:
+    url: "https://github.com/ManageIQ/manageiq-appliance/tarball/{{ manageiq_release_name }}"
+    dest: "/usr/src/manageiq-appliance-{{ manageiq_release_name }}"
+
+- name: untar manageiq-appliance
+  unarchive:
+    src: "/usr/src/manageiq-appliance-{{ manageiq }}"
+    dest: /usr/src
+    remote_src: yes
+
+- name: download manageiq-ui-service release
+  get_url:
+    url: "https://github.com/ManageIQ/manageiq-ui-service/tarball/{{ manageiq_release_name }}"
+    dest: "/usr/src/manageiq-ui-service-{{ manageiq_release_name }}"
+
+- name: untar manageiq-appliance
+  unarchive:
+    src: "/usr/src/manageiq-ui-service-{{ manageiq }}"
+    dest: /usr/src
+    remote_src: yes
