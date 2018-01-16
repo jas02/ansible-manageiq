@@ -140,8 +140,9 @@
     mode: 0755
 
 - name: ensure file /root/.gemrc exists
-  file:
-    path: /root/.gemrc
+  copy:
+    content: ""
+    dest: /root/.gemrc
     state: file
     owner: root
     group: root
