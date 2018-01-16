@@ -129,6 +129,30 @@
   args:
     chdir: "/usr/src/chruby-{{ manageiq_chruby_version }}"
 
+- name: ensure file /root/.gemrc exists
+  file:
+    path: /root/.gemrc
+    state: file
+    owner: root
+    group: root
+    mode: 0644
+
+- name: ensure file /root/.bashrc exists
+  file:
+    path: /root/.bashrc
+    state: file
+    owner: root
+    group: root
+    mode: 0644
+
+- name: ensure file /root/.bash_profile exists
+  file:
+    path: /root/.bash_profile
+    state: file
+    owner: root
+    group: root
+    mode: 0644
+
 - name: ensure the line in .gemrc
   lineinfile:
     path: /root/.gemrc
