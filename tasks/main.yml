@@ -212,6 +212,14 @@
     - "{{ manageiq_appliance_root }}"
     - "{{ manageiq_sui_root }}"
 
+- name: create manageiq symlink
+  file:
+    src: "{{ manageiq_app_root }}"
+    dest: /opt/manageiq/manageiq
+    owner: root
+    group: root
+    state: link
+
 - name: download manageiq release
   get_url:
     url: "https://github.com/ManageIQ/manageiq/tarball/{{ manageiq_release_name }}"
@@ -220,16 +228,9 @@
 - name: untar manageiq
   unarchive:
     src: "/usr/src/manageiq-{{ manageiq_release_name }}"
-    dest: "{{ manageiq_app_root }}/vmdb"
+    dest: "{{ manageiq_app_root }}"
     remote_src: yes
-
-- name: create manageiq symlink
-  file:
-    src: "{{ manageiq_app_root }}/vmdb"
-    dest: /opt/manageiq/manageiq
-    owner: root
-    group: root
-    state: link
+    extra_opts: [--strip-components=1]
 
 - name: download manageiq-appliance release
   get_url:
@@ -239,8 +240,9 @@
 - name: untar manageiq-appliance
   unarchive:
     src: "/usr/src/manageiq-appliance-{{ manageiq_release_name }}"
-    dest: /usr/src
+    dest: "{{ manageiq_appliance_root }}"
     remote_src: yes
+    extra_opts: [--strip-components=1]
 
 - name: download manageiq-ui-service release
   get_url:
@@ -250,5 +252,6 @@
 - name: untar manageiq-appliance
   unarchive:
     src: "/usr/src/manageiq-ui-service-{{ manageiq_release_name }}"
-    dest: /usr/src
+    dest: "{{ manageiq_sui_root }}"
     remote_src: yes
+    extra_opts: [--strip-components=1]

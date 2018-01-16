@@ -18,6 +18,6 @@ manageiq_ruby_version: 2.3.1
 
 # ManageIQ variables
 manageiq_release_name: fine
-manageiq_app_root: /var/www/miq
+manageiq_app_root: /var/www/miq/vmdb
 manageiq_appliance_root: /opt/manageiq/manageiq-appliance
 manageiq_sui_root: /opt/manageiq/manageiq-ui-service
