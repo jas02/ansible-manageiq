@@ -131,6 +131,14 @@
 
 - debug: msg="{{ lookup('env','HOME') }} is an environment variable"
 
+- name: create /root directory
+  file:
+    path: /root
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
 - name: ensure file /root/.gemrc exists
   file:
     path: /root/.gemrc
