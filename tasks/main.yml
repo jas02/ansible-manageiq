@@ -129,6 +129,8 @@
   args:
     chdir: "/usr/src/chruby-{{ manageiq_chruby_version }}"
 
+- debug: msg="{{ lookup('env','HOME') }} is an environment variable"
+
 - name: ensure file /root/.gemrc exists
   file:
     path: /root/.gemrc
