@@ -19,6 +19,10 @@
     url: https://copr.fedorainfracloud.org/coprs/manageiq/ManageIQ-Fine/repo/epel-7/manageiq-ManageIQ-Fine-epel-7.repo
     dest: /etc/yum.repos.d/manageiq-ManageIQ-Fine-epel-7.repo
 
+- name: install PostgreSQL repo rpm
+  yum:
+    name: "{{ manageiq_postgresql_repo_url }}"
+    state: present
 
 - name: install required packages
   yum:
@@ -45,10 +49,9 @@
     - "openssl-devel"
     - "openscap-scanner"
     - "patch"
-    - "rh-postgresql95-postgresql-server"
-    - "rh-postgresql95-postgresql-devel"
-    - "rh-postgresql95-postgresql-pglogical"
-    - "rh-postgresql95-repmgr"
+    - "postgresql{{ manageiq_postgresql_version }}-server"
+    - "postgresql{{ manageiq_postgresql_version }}-devel"
+    - "repmgr{{ manageiq_postgresql_version }}"
     - "readline-devel"
     - "sqlite-devel"
     - "sysvinit-tools"
