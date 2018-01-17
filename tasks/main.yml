@@ -1,4 +1,7 @@
 ---
+
+- debug: msg="{{ lookup('env','RAILS_USE_MEMORY_STORE') }} is an environment variable"
+
 - name: enable epel repository
   yum:
     name: epel-release
@@ -129,8 +132,6 @@
   args:
     chdir: "/usr/src/chruby-{{ manageiq_chruby_version }}"
 
-- debug: msg="{{ lookup('env','HOME') }} is an environment variable"
-
 - name: create /root directory
   file:
     path: /root
@@ -255,3 +256,59 @@
     dest: "{{ manageiq_sui_root }}"
     remote_src: yes
     extra_opts: [--strip-components=1]
+
+- name: run appliance_root setup
+  command: ./setup
+  args:
+    chdir: "{{ manageiq_appliance_root }}"
+
+- name: add necessary lines to /etc/default/evm
+  lineinfile:
+    path: /etc/default/evm
+    state: present
+    line: "{{ item }}"
+  with_items:
+    - "export APP_ROOT={{ manageiq_app_root }}"
+    - "export CONTAINER=true"
+    - "export PATH=$PATH:/opt/rubies/ruby-{{ manageiq_ruby_version }}/bin"
+
+- name: create app_root/log/apache
+  file:
+    path: "{{ manageiq_app_root }}/log/apache"
+    state: direcotry
+    owner: root
+    group: root
+    mode: 0755
+
+- name: backup and modify ssl.conf
+  copy:
+    content: "# This file intentionally left blank. ManageIQ maintains its own SSL configuration"
+    dest: /etc/httpd/conf.d/ssl.conf
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+    remote_src: yes
+    
+- name: copy cable.yml.sample
+  copy:
+    src: "{{ manageiq_app_root }}/config/cable.yml.sample"
+    dest: "{{ manageiq_app_root }}/config/cable.yml"
+    owner: root
+    group: root
+    mode: 0644
+    remote_src: yes
+
+- name: run source /etc/default/evm
+  shell: "source /etc/default/evm"
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: install bower yarn
+  npm:
+    name: "{{ item }}"
+    state: present
+    global: yes
+  with_items:
+    - "bower"
+    - "yarn"
