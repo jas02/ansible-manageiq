@@ -311,18 +311,15 @@
     - "yarn"
 
 - name: gem install bundler
-  gem:
-    name: bundler
-    state: present
-    build_flags: "--conservative"
+  shell: source /etc/default/evm && gem install bundler --conservative
 
 - name: install bower
-  shell: bower install --allow-root -F --silent --config.analytics=false
+  shell: source /etc/default/evm && bower install --allow-root -F --silent --config.analytics=false
   args:
     chdir: "{{ manageiq_app_root }}"
 
 - name: bundle install
-  shell: bundle install
+  shell: source /etc/default/evm && bundle install
   args:
     chdir: "{{ manageiq_app_root }}"
 
@@ -332,12 +329,12 @@
     chdir: "{{ manageiq_app_root }}"
 
 - name: evm compile_assets
-  shell: rake evm:compile_assets
+  shell: source /etc/default/evm && rake evm:compile_assets
   args:
     chdir: "{{ manageiq_app_root }}"
 
 - name: evm compile_sti_loader
-  shell: rake evm:compile_sti_loader
+  shell: source /etc/default/evm && rake evm:compile_sti_loader
   args:
     chdir: "{{ manageiq_app_root }}"
 
