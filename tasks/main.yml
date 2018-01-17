@@ -1,7 +1,4 @@
 ---
-- debug: msg="{{ lookup('env','APP_ROOT') }} is an environment variable"
-- debug: msg="{{ manageiq_app_root }} is role variable"
-
 - name: enable epel repository
   yum:
     name: epel-release
@@ -275,7 +272,7 @@
 - name: create app_root/log/apache
   file:
     path: "{{ manageiq_app_root }}/log/apache"
-    state: direcotry
+    state: directory
     owner: root
     group: root
     mode: 0755
