@@ -265,11 +265,7 @@
   lineinfile:
     path: /etc/default/evm
     state: present
-<<<<<<< HEAD
     line: "{{ item }}"
-=======
-    line: 
->>>>>>> 4175deb33e2fb9d9efe86581b645ca6e2646f0d1
   with_items:
     - "export APP_ROOT={{ manageiq_app_root }}"
     - "export CONTAINER=true"
@@ -307,7 +303,7 @@
   args:
     chdir: "{{ manageiq_app_root }}"
 
-- name: install bower yarn
+- name: install npm packages bower, yarn
   npm:
     name: "{{ item }}"
     state: present
