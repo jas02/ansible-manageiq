@@ -1,5 +1,4 @@
 ---
-
 - debug: msg="{{ lookup('env','RAILS_USE_MEMORY_STORE') }} is an environment variable"
 
 - name: enable epel repository
@@ -266,7 +265,11 @@
   lineinfile:
     path: /etc/default/evm
     state: present
+<<<<<<< HEAD
     line: "{{ item }}"
+=======
+    line: 
+>>>>>>> 4175deb33e2fb9d9efe86581b645ca6e2646f0d1
   with_items:
     - "export APP_ROOT={{ manageiq_app_root }}"
     - "export CONTAINER=true"
@@ -298,6 +301,7 @@
     group: root
     mode: 0644
     remote_src: yes
+<<<<<<< HEAD
 
 - name: run source /etc/default/evm
   shell: "source /etc/default/evm"
@@ -312,3 +316,5 @@
   with_items:
     - "bower"
     - "yarn"
+=======
+>>>>>>> 4175deb33e2fb9d9efe86581b645ca6e2646f0d1
