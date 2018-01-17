@@ -309,3 +309,78 @@
   with_items:
     - "bower"
     - "yarn"
+
+- name: gem install bundler
+  gem:
+    name: bundler
+    state: present
+    build_flags: "--conservative"
+
+- name: install bower
+  shell: bower install --allow-root -F --silent --config.analytics=false
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: bundle install
+  shell: bundle install
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: clear rails log and tmp
+  shell: bin/rails log:clear tmp:clear
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: evm compile_assets
+  shell: rake evm:compile_assets
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: evm compile_sti_loader
+  shell: rake evm:compile_sti_loader
+  args:
+    chdir: "{{ manageiq_app_root }}"
+
+- name: install build SUI
+  shell: "source /etc/default/evm && cd {{ manageiq_sui_root }} && yarn install && yarn run build"
+  args:
+    chdir: "{{ manageiq_sui_root }}"
+
+
+- name: copy systemd appliance-initialize service file
+  copy:
+    src: appliance-initialize.service
+    dest: /usr/lib/systemd/system/appliance-initialize.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy appliance-initialize shell script
+  copy:
+    src: appliance-initialize.sh
+    dest: /bin/appliance-initialize.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create docker_initdb symlink
+  file:
+    src: "{{ manageis_app_root }}/docker-assets/docker_initdb"
+    dest: "/usr/bin/docker_initdb"
+    state: link
+    owner: root
+    group: root
+
+- name: enable systemd services
+  service:
+    name: "{{ item }}"
+    state: enabled
+  with_items:
+    - "memcached"
+    - "appliance-initialize"
+    - "evmserverd"
+    - "evminit"
+    - "evm-watchdog"
+    - "miqvmstat"
+    - "miqtop"
+    - "crond"
