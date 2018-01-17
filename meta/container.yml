@@ -12,5 +12,5 @@
 manageiq:
   from: centos:7
   volumes:
-    - "/var/opt/rh/rh-postgresql95/lib/pgsql/data"
+    - "/var/lib/pgsql/{{ manageiq_postgresql_version_s }}/data"
   command: ['/usr/sbin/init']
