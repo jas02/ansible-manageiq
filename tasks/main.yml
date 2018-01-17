@@ -333,7 +333,7 @@
     chdir: "{{ manageiq_app_root }}"
 
 - name: clear rails log and tmp
-  shell: bin/rails log:clear tmp:clear
+  shell: source /etc/default/evm && bin/rails log:clear tmp:clear
   args:
     chdir: "{{ manageiq_app_root }}"
 
