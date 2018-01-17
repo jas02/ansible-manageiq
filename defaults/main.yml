@@ -21,12 +21,3 @@ manageiq_release_name: fine
 manageiq_app_root: /var/www/miq/vmdb
 manageiq_appliance_root: /opt/manageiq/manageiq-appliance
 manageiq_sui_root: /opt/manageiq/manageiq-ui-service
-
-environment:
-  LANG: en_US.UTF-8
-  TERM: xterm
-  RUBY_GEMS_ROOT: "/opt/rubies/ruby-{{ manageiq_ruby_version }}/lib/ruby/gems/2.3.0"
-  APP_ROOT: "{{ manageiq_app_root }}"
-  APPLIANCE_ROOT: "{{ manageiq_appliance_root }}"
-  SUI_ROOT: "{{ manageiq_sui_root }}"
-  RAILS_USE_MEMORY_STORE: true
