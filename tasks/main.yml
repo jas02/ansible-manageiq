@@ -310,10 +310,17 @@
     - "bower"
     - "yarn"
 
+- name: install gem pg
+  gem:
+    name: pg
+    version: 0.18.4
+    state: present
+    build_flags: "--with-pg-include=/usr/pgsql-9.6/include --with-pg-config=/usr/pgsql-9.6/bin/pg_config"
+
 - name: gem install bundler
   shell: source /etc/default/evm && gem install bundler --conservative
 
-- name: install bower
+- name: bower install
   shell: source /etc/default/evm && bower install --allow-root -F --silent --config.analytics=false
   args:
     chdir: "{{ manageiq_app_root }}"
