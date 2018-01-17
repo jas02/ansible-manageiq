@@ -301,7 +301,6 @@
     group: root
     mode: 0644
     remote_src: yes
-<<<<<<< HEAD
 
 - name: run source /etc/default/evm
   shell: "source /etc/default/evm"
@@ -316,5 +315,3 @@
   with_items:
     - "bower"
     - "yarn"
-=======
->>>>>>> 4175deb33e2fb9d9efe86581b645ca6e2646f0d1
