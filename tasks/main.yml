@@ -337,6 +337,9 @@
   args:
     chdir: "{{ manageiq_app_root }}"
 
+- name: start memcached
+  shell: "memcached -u root &"
+
 - name: evm compile_assets
   shell: source /etc/default/evm && rake evm:compile_assets
   args:
@@ -346,6 +349,9 @@
   shell: source /etc/default/evm && rake evm:compile_sti_loader
   args:
     chdir: "{{ manageiq_app_root }}"
+
+- name: stop memcached
+  shell: pkill memcached
 
 - name: install build SUI
   shell: "source /etc/default/evm && cd {{ manageiq_sui_root }} && yarn install && yarn run build"
