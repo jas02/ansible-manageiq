@@ -384,9 +384,9 @@
     mode: 0755
 
 - name: enable systemd services
-  systemd:
+  service:
     name: "{{ item }}"
-    state: enabled
+    enabled: yes
   with_items:
     - "memcached"
     - "appliance-initialize"
