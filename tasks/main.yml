@@ -377,11 +377,12 @@
 
 - name: create docker_initdb symlink
   file:
-    src: "{{ manageis_app_root }}/docker-assets/docker_initdb"
+    src: "docker_initdb"
     dest: "/usr/bin/docker_initdb"
-    state: link
+    state: present
     owner: root
     group: root
+    mode: 0755
 
 - name: enable systemd services
   service:

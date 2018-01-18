@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Source EVM environment
+[ -f /etc/default/evm ] &&  . /etc/default/evm
+
+# Check postgres server DB init status, if necessary, initdb, start/enable service and inject MIQ role
+
+echo "== Checking MIQ database status =="
+
+[[ -d /var/lib/pgsql/9.6/data/base ]]
+        if [ $? -eq 0 ]; then
+                echo "** DB already initialized"
+                exit 0
+        else
+                echo "** DB has not been initialized"
+                echo "** Launching initdb"
+                su postgres -c "initdb -D ${APPLIANCE_PG_DATA}"
+                test $? -ne 0 && echo "!! Failed to initdb" && exit 1
+                echo "** Starting postgresql"
+                su postgres -c "pg_ctl -D ${APPLIANCE_PG_DATA} start"
+                test $? -ne 0 && echo "!! Failed to start postgresql service" && exit 1
