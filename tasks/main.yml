@@ -375,8 +375,8 @@
     group: root
     mode: 0755
 
-- name: create docker_initdb symlink
-  file:
+- name: create docker_initdb
+  copy:
     src: "docker_initdb"
     dest: "/usr/bin/docker_initdb"
     state: present
