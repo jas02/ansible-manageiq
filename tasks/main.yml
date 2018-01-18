@@ -379,7 +379,6 @@
   copy:
     src: "docker_initdb"
     dest: "/usr/bin/docker_initdb"
-    state: present
     owner: root
     group: root
     mode: 0755
