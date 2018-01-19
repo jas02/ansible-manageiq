@@ -5,6 +5,8 @@
 
 # Check postgres server DB init status, if necessary, initdb, start/enable service and inject MIQ role
 
+export PATH="$PATH:/usr/pgsql-9.6/bin"
+
 echo "== Checking MIQ database status =="
 
 [[ -d /var/lib/pgsql/9.6/data/base ]]
@@ -19,3 +21,4 @@ echo "== Checking MIQ database status =="
                 echo "** Starting postgresql"
                 su postgres -c "pg_ctl -D ${APPLIANCE_PG_DATA} start"
                 test $? -ne 0 && echo "!! Failed to start postgresql service" && exit 1
+        fi
