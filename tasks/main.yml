@@ -393,7 +393,7 @@
 
 - name: create /var/run/postgresql
   file:
-    status: directory
+    state: directory
     owner: postgres
     group: postgres
     mode: 0755
