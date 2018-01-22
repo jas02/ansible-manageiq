@@ -380,7 +380,7 @@
     mode: 0755
 
 - name: replace /etc/default/evm_postgres
-  copy:
+  template:
     src: evm_postgres.j2
     dest: /etc/default/evm_postgres
     owner: root
