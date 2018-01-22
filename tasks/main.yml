@@ -311,7 +311,7 @@
     - "yarn"
 
 - name: install gem pg
-  shell: "gem install pg -v '0.18.4' -- --with-pg-include=/usr/pgsql-{{ manageiq_postgresql_version }}/include --with-pg-config=/usr/pgsql-{{ manageiq_postgresql_version }}/bin/pg_config
+  shell: "gem install pg -v '0.18.4' -- --with-pg-include=/usr/pgsql-{{ manageiq_postgresql_version }}/include --with-pg-config=/usr/pgsql-{{ manageiq_postgresql_version }}/bin/pg_config"
   environment:
     PATH: "{{ ansible_env.PATH }}:/opt/rubies/ruby-{{ manageiq_ruby_version }}/bin"
 
