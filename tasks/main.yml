@@ -311,11 +311,7 @@
     - "yarn"
 
 - name: install gem pg
-  gem:
-    name: pg
-    version: 0.18.4
-    state: present
-    build_flags: "--with-pg-include=/usr/pgsql-9.6/include --with-pg-config=/usr/pgsql-9.6/bin/pg_config"
+  shell: "gem install pg -v '0.18.4' -- --with-pg-include=/usr/pgsql-{{ manageiq_postgresql_version }}/include --with-pg-config=/usr/pgsql-{{ manageiq_postgresql_version }}/bin/pg_config
   environment:
     PATH: "{{ ansible_env.PATH }}:/opt/rubies/ruby-{{ manageiq_ruby_version }}/bin"
 
@@ -360,24 +356,24 @@
 
 
 - name: copy systemd appliance-initialize service file
-  copy:
-    src: appliance-initialize.service
+  template:
+    src: appliance-initialize.service.j2
     dest: /usr/lib/systemd/system/appliance-initialize.service
     owner: root
     group: root
     mode: 0644
 
 - name: copy appliance-initialize shell script
-  copy:
-    src: appliance-initialize.sh
+  template:
+    src: appliance-initialize.sh.j2
     dest: /bin/appliance-initialize.sh
     owner: root
     group: root
     mode: 0755
 
 - name: create docker_initdb
-  copy:
-    src: "docker_initdb"
+  template:
+    src: docker_initdb.j2
     dest: "/usr/bin/docker_initdb"
     owner: root
     group: root
@@ -385,7 +381,7 @@
 
 - name: replace /etc/default/evm_postgres
   copy:
-    src: evm_postgres
+    src: evm_postgres.j2
     dest: /etc/default/evm_postgres
     owner: root
     group: root

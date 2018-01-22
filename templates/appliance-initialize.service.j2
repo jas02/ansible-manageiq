@@ -1,6 +1,6 @@
 [Unit]
 Description=Initialize Appliance Database
-ConditionPathExists=!/var/lib/pgsql/9.6/data
+ConditionPathExists=!/var/lib/pgsql/{{ manageiq_postgresql_version }}/data
 After=evminit.service memcached.service
 Before=evmserverd.service
 Requires=memcached.service

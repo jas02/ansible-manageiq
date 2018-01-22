@@ -5,11 +5,11 @@
 
 # Check postgres server DB init status, if necessary, initdb, start/enable service and inject MIQ role
 
-export PATH="$PATH:/usr/pgsql-9.6/bin"
+export PATH="$PATH:/usr/pgsql-{{ manageiq_postgresql_version }}/bin"
 
 echo "== Checking MIQ database status =="
 
-[[ -d /var/lib/pgsql/9.6/data/base ]]
+[[ -d /var/lib/pgsql/{{ manageiq_postgresql_version }}/data/base ]]
         if [ $? -eq 0 ]; then
                 echo "** DB already initialized"
                 exit 0
