@@ -329,12 +329,12 @@
 
 - name: copy appliance-initialize.service
   copy: 
-  src: "{{ manageiq_app_root }}/docker-assets/appliance-initialize.service 
+  src: "{{ manageiq_app_root }}/docker-assets/appliance-initialize.service"
   dest: /usr/lib/systemd/system/appliance-initialize.service
 
 - name: copy appliance-initialize.sh
   copy:
-    src: "{{ manageiq_app_root }}/"docker-assets/appliance-initialize.sh
+    src: "{{ manageiq_app_root }}/docker-assets/appliance-initialize.sh"
     dest: /bin/appliance-initialize.sh
 
 - name: create docker_init symlink
