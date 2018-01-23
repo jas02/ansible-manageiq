@@ -341,6 +341,7 @@
     owner: root
     group: root
     mode: 0644
+    remote_src: yes
 
 - name: copy appliance-initialize.sh
   copy:
@@ -349,6 +350,7 @@
     owner: root
     group: root
     mode: 0644
+    remote_src: yes
 
 - name: create docker_init symlink
   file:
