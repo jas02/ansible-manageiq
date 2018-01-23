@@ -1,7 +1,7 @@
 ---
-- name: enable epel repository
+- name: install epel repository
   yum:
-    name: epel-release
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
     state: present
 
 - name: install pip
@@ -49,9 +49,13 @@
     - "openssl-devel"
     - "openscap-scanner"
     - "patch"
-    - "postgresql{{ manageiq_postgresql_version_short }}-server"
-    - "postgresql{{ manageiq_postgresql_version_short }}-devel"
-    - "repmgr{{ manageiq_postgresql_version_short }}"
+    #    - "postgresql{{ manageiq_postgresql_version_short }}-server"
+    #    - "postgresql{{ manageiq_postgresql_version_short }}-devel"
+    #    - "repmgr{{ manageiq_postgresql_version_short }}"
+    - "rh-postgresql95-postgresql-server"
+    - "rh-postgresql95-postgresql-devel"
+    - "rh-postgresql95-postgresql-pglogical"
+    - "rh-postgresql95-repmgr"
     - "readline-devel"
     - "sqlite-devel"
     - "sysvinit-tools"
