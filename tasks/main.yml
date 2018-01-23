@@ -1,4 +1,11 @@
 ---
+
+- name: set variables
+  set_fact:
+    SUI_ROOT: "{{ lookup('env','SUI_ROOT') }}"
+    RUBY_GEMS_ROOT: "{{ lookup('env','RUBY_GEMS_ROOT') }}"
+    APP_ROOT: "{{ lookup('env','APP_ROOT') }}"
+
 - name: install epel repository
   yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
@@ -310,20 +317,20 @@
     # Cleanup install artifacts
     npm cache clean && \
     bower cache clean && \
-    find ${RUBY_GEMS_ROOT}/gems/ -name .git | xargs rm -rvf && \
-    find ${RUBY_GEMS_ROOT}/gems/ | grep "\.s\?o$" | xargs rm -rvf && \
-    rm -rvf ${RUBY_GEMS_ROOT}/gems/rugged-*/vendor/libgit2/build && \
-    rm -rvf ${RUBY_GEMS_ROOT}/cache/* && \
+    find {{ RUBY_GEMS_ROOT }} /gems/ -name .git | xargs rm -rvf && \
+    find {{ RUBY_GEMS_ROOT }}/gems/ | grep "\.s\?o$" | xargs rm -rvf && \
+    rm -rvf {{ RUBY_GEMS_ROOT }}/gems/rugged-*/vendor/libgit2/build && \
+    rm -rvf {{ RUBY_GEMS_ROOT }}/cache/* && \
     rm -rvf /root/.bundle/cache && \
-    rm -rvf ${APP_ROOT}/tmp/cache/assets && \
-    rm -vf ${APP_ROOT}/log/*.log
+    rm -rvf {{ APP_ROOT }}/tmp/cache/assets && \
+    rm -vf {{ APP_ROOT }}/log/*.log
   args:
     chdir: "{{ manageiq_app_root }}"
 
 - name: build sui
   shell: |
     source /etc/default/evm && \
-    cd ${SUI_ROOT} && \
+    cd {{ SUI_ROOT }} && \
     yarn install && \
     yarn run build
 
